@@ -1,13 +1,12 @@
 import figlet from 'figlet';
 import { defaultsDeep } from 'lodash';
-import blessed, { Element, List, Widgets } from 'reblessed';
+import blessed, { Box, List, Widgets } from 'reblessed';
 
-import { defaultBoxTheme, mainColor } from '../theme';
+import { borderBoxTheme, mainColor } from '../theme';
 
 import { Tabs } from './Tabs';
 import { SquidVersion } from './types';
 import { VersionDbAccessTab } from './VersionDbAccessTab';
-import { VersionDeployTab } from './VersionDeployTab';
 import { VersionLogTab } from './VersionLogsTab';
 import { VersionSummaryTab } from './VersionSummaryTab';
 
@@ -25,12 +24,12 @@ const figletAsync = (text: string, options?: figlet.Options) => {
 };
 
 export class VersionView extends List {
-  header: Element;
+  header: Box;
   tabs: Tabs;
 
   constructor(options: Widgets.BoxOptions) {
     super(
-      defaultsDeep(options, defaultBoxTheme, {
+      defaultsDeep(options, borderBoxTheme, {
         tags: true,
         content: '',
       }),
@@ -71,6 +70,7 @@ export class VersionView extends List {
       {
         left: 2,
         top: 7,
+        // height: '100%-9',
       },
     );
 
@@ -89,5 +89,7 @@ export class VersionView extends List {
     this.header.setContent(title);
     this.tabs.setVersion(squid);
     this.setLabel(squid.name);
+
+    this.screen.program;
   }
 }

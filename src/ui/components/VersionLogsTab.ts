@@ -1,31 +1,26 @@
 import { addMinutes } from 'date-fns';
-import blessed, { Element, List, Log } from 'reblessed';
+import blessed, { Box } from 'reblessed';
 
 import { streamSquidLogs, versionHistoryLogs } from '../../api';
 import { pretty } from '../../logs';
-import { mainColor } from '../theme';
+import { scrollBarTheme } from '../theme';
 
 import { Loader } from './Loader';
 import { VersionTab } from './Tabs';
 import { SquidVersion } from './types';
 
 export class VersionLogTab implements VersionTab {
-  async append(parent: Element, squid: SquidVersion) {
+  async append(parent: Box, squid: SquidVersion) {
     const logsBox = blessed.log({
       top: 0,
       left: 0,
       width: '100%',
       height: '100%',
       scrollable: true,
-      scrollbar: true,
+
       alwaysScroll: true,
       mouse: true,
-      style: {
-        scrollbar: {
-          bg: mainColor,
-          fg: 'white',
-        },
-      },
+      scrollbar: scrollBarTheme,
     } as any);
     logsBox.hide();
 

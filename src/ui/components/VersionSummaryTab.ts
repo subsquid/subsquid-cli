@@ -1,9 +1,10 @@
 import chalk from 'chalk';
 import bytes from 'pretty-bytes';
-import blessed, { Element } from 'reblessed';
+import blessed, { Box } from 'reblessed';
 
-import { chalkMainColor } from '../theme';
+import { borderBoxTheme, chalkMainColor, scrollBarTheme } from '../theme';
 
+import { CopyableBox, copyable, empty } from './SelectableBox';
 import { VersionTab } from './Tabs';
 import { SquidVersion } from './types';
 
@@ -12,9 +13,7 @@ export function numberWithSpaces(n: number) {
 }
 
 export class VersionSummaryTab implements VersionTab {
-  async append(parent: Element, squid: SquidVersion) {
-    const lines = [];
-
+  async append(parent: Box, squid: SquidVersion) {
     const processorPercent =
       (squid.version.processor.syncState.currentBlock * 100) / squid.version.processor.syncState.totalBlocks;
     const processorState = `Sync ${processorPercent.toFixed(2)}% ${numberWithSpaces(
@@ -26,25 +25,24 @@ export class VersionSummaryTab implements VersionTab {
       squid.version.db.disk.totalBytes,
     )}`;
 
-    if (squid.version.description) {
-      lines.push(squid.version.description);
-      lines.push('');
-    }
+    const lines = [
+      ...(squid.version.description ? [copyable(squid.version.description), empty()] : []),
 
-    lines.push(`${chalkMainColor(`API`)} ${chalkMainColor(squid.version.api.status)}`);
-    lines.push(`${squid.version.deploymentUrl}`);
-    lines.push('');
+      `${chalkMainColor(`API`)} ${chalkMainColor(squid.version.api.status)}`,
+      copyable(`${squid.version.deploymentUrl}`),
+      empty(),
 
-    lines.push(`${chalkMainColor(`PROCESSOR`)} ${chalkMainColor(squid.version.processor.status)}`);
-    lines.push(chalk.dim(processorState));
-    lines.push('');
+      `${chalkMainColor(`PROCESSOR`)} ${chalkMainColor(squid.version.processor.status)}`,
+      chalk.dim(processorState),
+      empty(),
 
-    lines.push(`${chalkMainColor(`DB`)} ${chalkMainColor(squid.version.db.disk.usageStatus)}`);
-    lines.push(dbState);
+      `${chalkMainColor(`DB`)} ${chalkMainColor(squid.version.db.disk.usageStatus)}`,
+      dbState,
+    ];
 
     parent.append(
-      blessed.box({
-        content: lines.join('\n'),
+      new CopyableBox({
+        lines,
       }),
     );
   }

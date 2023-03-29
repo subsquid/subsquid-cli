@@ -18,6 +18,8 @@ export default class Explorer extends Command {
       debug: true,
       // autoPadding: true,
       fullUnicode: true,
+      sendFocus: false,
+      autoPadding: true,
     });
 
     const manager = new VersionManager({
@@ -45,8 +47,6 @@ export default class Explorer extends Command {
     screen.key(['C-c'], () => {
       return process.exit(0);
     });
-
-    // screen.program.disableMouse();
 
     manager.focus();
     screen.render();

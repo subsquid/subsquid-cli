@@ -1,4 +1,5 @@
-import blessed, { Element, Widgets } from 'reblessed';
+import { defaultsDeep } from 'lodash';
+import blessed, { Box, Widgets } from 'reblessed';
 
 import { mainColor } from '../theme';
 
@@ -11,7 +12,7 @@ interface VersionTabConstructor {
 export type Cancellable = void | (() => void) | undefined;
 
 export interface VersionTab {
-  append(holder: Element, squid: SquidVersion): Promise<Cancellable>;
+  append(holder: Box, squid: SquidVersion): Promise<Cancellable>;
 }
 
 export type Tab = {
@@ -20,15 +21,15 @@ export type Tab = {
   renderer: VersionTabConstructor;
 };
 
-export class Tabs extends Element {
+export class Tabs extends Box {
   menu: any;
   squid: SquidVersion | undefined;
   selectedTab = 0;
-  wrapper: Element | undefined;
+  wrapper: Box | undefined;
   cancel: Cancellable | undefined;
 
   constructor(tabs: Tab[], options: Widgets.BoxOptions = {}) {
-    super(options);
+    super(defaultsDeep(options));
 
     const commands = tabs.reduce((res, tab, currentIndex) => {
       return {
@@ -51,15 +52,21 @@ export class Tabs extends Element {
             this.wrapper = blessed.box({
               top: 2,
               left: '15',
+              // mouse: true,
+              // height: '100%',
+              // border: {
+              //   type: 'line',
+              // },
+              // parent: this,
+              // style: {
+              //   border: { fg: '#fff' },
+              // },
             });
 
             this.append(this.wrapper);
-
-            const renderer = new tab.renderer();
-
-            try {
-              this.cancel = await renderer.append(this.wrapper, this.squid);
-            } catch (e) {}
+            this.cancel = await new tab.renderer().append(this.wrapper, this.squid);
+            // try {
+            // } catch (e) {}
           },
         },
       };
@@ -72,12 +79,11 @@ export class Tabs extends Element {
 
       autoCommandKeys: false,
       keys: true,
-
+      mouse: true,
       style: {
         item: {
           fg: 'white',
           bg: 'black',
-          border: mainColor,
         },
         selected: {
           fg: 'white',

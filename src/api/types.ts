@@ -61,7 +61,7 @@ export type VersionResponse = {
       usageStatus: 'LOW' | 'NORMAL' | 'WARNING' | 'CRITICAL' | 'UNKNOWN';
     };
     ingress: {
-      url: number;
+      url: string;
       db: string;
       user: string;
       password: string;

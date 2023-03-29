@@ -1,5 +1,5 @@
 import { defaultsDeep, flatten } from 'lodash';
-import { List, Widgets } from 'reblessed';
+import { Box, List, Widgets } from 'reblessed';
 
 import { squidList } from '../../api';
 
@@ -7,20 +7,14 @@ import { SquidList } from './SquidList';
 import { SquidVersion } from './types';
 import { VersionView } from './VersionView';
 
-export class VersionManager extends List {
+export class VersionManager extends Box {
   list: SquidList;
   view: VersionView;
   squids: SquidVersion[] = [];
   currentIndex?: number;
 
   constructor(options: Widgets.BoxOptions) {
-    super(
-      defaultsDeep(options, {
-        vi: true,
-        keys: true,
-        mouse: true,
-      }),
-    );
+    super(options);
 
     this.list = new SquidList({
       top: 0,
@@ -40,12 +34,12 @@ export class VersionManager extends List {
       this.updateCurrentSquidByIndex(index);
     });
 
-    this.key(['up', 'down'], (ch, key) => {
-      this.list.rows.emit('keypress', ch, key);
-    });
-
     this.append(this.list);
     this.append(this.view);
+  }
+
+  focus() {
+    this.list.rows.focus();
   }
 
   async load() {

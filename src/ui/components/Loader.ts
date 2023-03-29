@@ -7,7 +7,7 @@ const frames = ['▰▱▱▱▱▱▱', '▰▰▱▱▱▱▱', '▰▰▰▱�
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-export class Loader extends blessed.Element {
+export class Loader extends blessed.Box {
   step = 0;
   renderedAt = Date.now();
   interval;

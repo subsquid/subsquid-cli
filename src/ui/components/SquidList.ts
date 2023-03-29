@@ -1,9 +1,9 @@
 import { format } from 'date-fns';
 import { defaultsDeep } from 'lodash';
-import blessed, { List, TextElement, Widgets } from 'reblessed';
+import blessed, { Box, List, TextElement, Widgets } from 'reblessed';
 
 import { VersionResponse } from '../../api';
-import { mainColor } from '../theme';
+import { borderBoxTheme, mainColor, mainLightColor } from '../theme';
 
 import { SquidVersion } from './types';
 
@@ -73,43 +73,34 @@ function versionStatus(status: VersionResponse['deploy']['status']) {
   }
 }
 
-export class SquidList extends List {
+export class SquidList extends Box {
   rows: List;
   text: TextElement;
   squids: SquidVersion[] = [];
 
   constructor(options: Widgets.BoxOptions) {
     super(
-      defaultsDeep(options, {
-        vi: true,
-        keys: true,
-        mouse: true,
+      defaultsDeep(options, borderBoxTheme, {
         label: 'Squids',
         padding: {
           left: 0,
           right: 0,
         },
-        border: {
-          type: 'line',
-        },
-        style: {
-          border: {
-            fg: mainColor,
-          },
-        },
       }),
     );
 
     this.rows = blessed.list({
-      vi: true,
       keys: true,
       tags: true,
       mouse: true,
+      invertSelected: false,
       top: 1,
       width: '100%-3',
       height: '100%-3',
+      baseLimit: 0,
       style: {
         fg: mainColor,
+        item: {},
         selected: {
           fg: 'white',
           bg: mainColor,
@@ -122,7 +113,7 @@ export class SquidList extends List {
 
     this.rows.on('select item', (item: Widgets.BlessedElement) => {
       const index = this.rows.getItemIndex(item);
-
+      this.screen.debug(index.toString());
       this.emit('select', index);
     });
 

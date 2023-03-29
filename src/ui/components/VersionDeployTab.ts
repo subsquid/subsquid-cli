@@ -1,4 +1,4 @@
-import blessed, { Element } from 'reblessed';
+import blessed, { Box } from 'reblessed';
 
 import { getDeploys } from '../../api';
 import { mainColor } from '../theme';
@@ -8,7 +8,7 @@ import { VersionTab } from './Tabs';
 import { SquidVersion } from './types';
 
 export class VersionDeployTab implements VersionTab {
-  async append(parent: Element, { version }: SquidVersion) {
+  async append(parent: Box, { version }: SquidVersion) {
     const list = blessed.listtable({
       top: 0,
       left: 0,

@@ -1,43 +1,39 @@
 import chalk from 'chalk';
-import blessed, { Element } from 'reblessed';
+import blessed, { Box } from 'reblessed';
 
-import { chalkMainColor } from '../theme';
+import { chalkMainColor, scrollBarTheme } from '../theme';
 
+import { copyable, CopyableBox, empty } from './SelectableBox';
 import { VersionTab } from './Tabs';
 import { SquidVersion } from './types';
 
 export class VersionDbAccessTab implements VersionTab {
-  async append(parent: Element, squid: SquidVersion) {
-    const lines = [];
-
-    lines.push(chalkMainColor(`URL`));
-    lines.push(squid.version.db.ingress.url);
-    lines.push('');
-
-    lines.push(chalkMainColor(`DB`));
-    lines.push(squid.version.db.ingress.db);
-    lines.push('');
-
-    lines.push(chalkMainColor(`User`));
-    lines.push(squid.version.db.ingress.user);
-    lines.push('');
-
-    lines.push(chalkMainColor(`Password`));
-    lines.push(squid.version.db.ingress.password);
-    lines.push('');
-    lines.push('');
-
-    lines.push(chalkMainColor(`PSQL command`));
-    lines.push(
-      chalk.bgBlackBright(
-        `PGPASSWORD=${squid.version.db.ingress.password} pqsl -h ${squid.version.db.ingress.url} -d ${squid.version.db.ingress.db} -U ${squid.version.db.ingress.user}`,
-      ),
-    );
-    lines.push('');
-
+  async append(parent: Box, squid: SquidVersion) {
     parent.append(
-      blessed.box({
-        content: lines.join('\n'),
+      new CopyableBox({
+        lines: [
+          chalkMainColor(`URL`),
+          copyable(squid.version.db.ingress.url),
+          empty(),
+
+          chalkMainColor(`DB`),
+          copyable(squid.version.db.ingress.db),
+          empty(),
+
+          chalkMainColor(`User`),
+          copyable(squid.version.db.ingress.user),
+          empty(),
+
+          chalkMainColor(`Password`),
+          copyable(squid.version.db.ingress.password),
+          empty(),
+          empty(),
+
+          chalkMainColor(`PSQL command`),
+          copyable(
+            `PGPASSWORD=${squid.version.db.ingress.password} pqsl -h ${squid.version.db.ingress.url} -d ${squid.version.db.ingress.db} -U ${squid.version.db.ingress.user}`,
+          ),
+        ],
       }),
     );
   }

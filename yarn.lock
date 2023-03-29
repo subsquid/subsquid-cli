@@ -1328,6 +1328,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/copy-paste@^1.1.30":
+  version "1.1.30"
+  resolved "https://registry.yarnpkg.com/@types/copy-paste/-/copy-paste-1.1.30.tgz#a7d454c9e1e4542328f7f1eecf5333be8cfb50ed"
+  integrity sha512-/pjP3jEYc+JFXjNMjlJaSE7ZVpPYCUz0+jdF1nVzFOsEygxTt0Jr9k3DbfKV3CDfZLjFpJ5p/B+vNLxWVe9Cvw==
+
 "@types/expect@^1.20.4":
   version "1.20.4"
   resolved "https://registry.yarnpkg.com/@types/expect/-/expect-1.20.4.tgz#8288e51737bf7e3ab5d7c77bfa695883745264e5"
@@ -2497,6 +2502,15 @@ convert-source-map@^1.4.0, convert-source-map@^1.6.0, convert-source-map@^1.7.0:
   integrity sha512-+OQdjP49zViI/6i7nIJpA8rAl4sV/JdPfU9nZs3VqOwGIgizICvuN2ru6fMd+4llL0tar18UYJXfZ/TWtmhUjA==
   dependencies:
     safe-buffer "~5.1.1"
+
+copy-paste@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/copy-paste/-/copy-paste-1.3.0.tgz#a7e6c4a1c28fdedf2b081e72b97df2ef95f471ed"
+  integrity sha512-HA6le4vPZW2EuPFixuGUpVRKPdAmZyRlF30x5lTbfX7xXHN9NwX/+Sff7Getowosoe/lZIFwrjn4hvsYGe2vRw==
+  dependencies:
+    iconv-lite "^0.4.8"
+  optionalDependencies:
+    sync-exec "~0.6.x"
 
 core-util-is@~1.0.0:
   version "1.0.3"
@@ -3731,7 +3745,7 @@ hyperlinker@^1.0.0:
   resolved "https://registry.yarnpkg.com/hyperlinker/-/hyperlinker-1.0.0.tgz#23dc9e38a206b208ee49bc2d6c8ef47027df0c0e"
   integrity sha512-Ty8UblRWFEcfSuIaajM34LdPXIhbs1ajEX/BBPv24J+enSVaEVY63xQ6lTO9VRYS5LAoghIG0IDJ+p+IPzKUQQ==
 
-iconv-lite@^0.4.24:
+iconv-lite@^0.4.24, iconv-lite@^0.4.8:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
   integrity sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==
@@ -5108,11 +5122,6 @@ negotiator@^0.6.2, negotiator@^0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
-
-neo-blessed@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/neo-blessed/-/neo-blessed-0.2.0.tgz#30f9495fdd104494402b62c6273a9c9b82de4f2b"
-  integrity sha512-C2kC4K+G2QnNQFXUIxTQvqmrdSIzGTX1ZRKeDW6ChmvPRw8rTkTEJzbEQHiHy06d36PCl/yMOCjquCRV8SpSQw==
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -6574,6 +6583,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+sync-exec@~0.6.x:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/sync-exec/-/sync-exec-0.6.2.tgz#717d22cc53f0ce1def5594362f3a89a2ebb91105"
+  integrity sha512-FHup6L3hMWn+2asiIC/7kj/3CaMM8aAAKPx62DRk42hQkz4H2yBADR0OnnY8Eh5Bxrzb371aPUfnW4WzAUYItQ==
 
 taketalk@^1.0.0:
   version "1.0.0"
