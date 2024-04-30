@@ -9,6 +9,7 @@ on:
         options:
           - beta
           - latest
+          - alpha
 
 #  pull_request:
 #    branches:

@@ -54,13 +54,13 @@ export class VersionManager extends List {
   async load() {
     const squids = await squidList({ orgCode: this.organization });
 
-    this.squids = flatten(
-      squids.map((squid) =>
-        squid.versions.map((v) => {
-          return new SquidVersion(squid, v);
-        }),
-      ),
-    ).sort((a, b) => a.name.localeCompare(b.name));
+    // this.squids = flatten(
+    //   squids.map((squid) =>
+    //     squid.versions.map((v) => {
+    //       return new SquidVersion(squid, v);
+    //     }),
+    //   ),
+    // ).sort((a, b) => a.name.localeCompare(b.name));
 
     await this.list.recalculateTable(this.squids);
 

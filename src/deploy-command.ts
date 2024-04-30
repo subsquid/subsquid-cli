@@ -19,9 +19,9 @@ export abstract class DeployCommand extends CliCommand {
   deploy: DeployResponse | undefined;
   logsPrinted = 0;
 
-  async findSquid({ orgCode, squidName }: { orgCode: string; squidName: string }) {
+  async findSquid({ orgCode, squidName, tagOrId }: { orgCode: string; squidName: string; tagOrId: string }) {
     try {
-      return await getSquid({ orgCode, squidName });
+      return await getSquid({ orgCode, squidName, tagOrId });
     } catch (e: unknown) {
       if (e instanceof ApiError && e.request.status === 404) {
         return null;

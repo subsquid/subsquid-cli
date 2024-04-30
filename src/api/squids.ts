@@ -3,6 +3,7 @@ import split2 from 'split2';
 import { pretty } from '../logs';
 
 import { api, debugLog } from './api';
+import { getDemoSquid, listDemoSquids, Squid } from './demoStore';
 import {
   DeployResponse,
   HttpResponse,
@@ -10,38 +11,42 @@ import {
   LogsResponse,
   SquidNameIsAvailableResponse,
   SquidResponse,
-  SquidVersionResponse,
   UploadUrlResponse,
-  VersionResponse,
 } from './types';
 
-export async function squidList({ orgCode }: { orgCode: string }): Promise<SquidResponse[]> {
-  const { body } = await api<HttpResponse<SquidResponse[]>>({
-    method: 'get',
-    path: `/orgs/${orgCode}/squids`,
+export async function squidList({ orgCode }: { orgCode: string }) {
+  return listDemoSquids(orgCode).sort((a, b) => {
+    return new Date(b.deployedAt || 0).valueOf() - new Date(a.deployedAt || 0).valueOf();
   });
 
-  return body.payload;
+  // const { body } = await api<HttpResponse<SquidResponse[]>>({
+  //   method: 'get',
+  //   path: `/orgs/${orgCode}/squids`,
+  // });
+  //
+  // return body.payload;
 }
 
 export async function getSquid({
   orgCode,
   squidName,
-  versionName,
+  tagOrId,
 }: {
   orgCode: string;
   squidName: string;
-  versionName?: string;
-}): Promise<SquidResponse> {
-  const { body } = await api<HttpResponse<SquidResponse>>({
-    method: 'get',
-    path: `/orgs/${orgCode}/squids/${squidName}`,
-    query: {
-      versionName,
-    },
-  });
+  tagOrId: string;
+}): Promise<Squid> {
+  return getDemoSquid(orgCode, squidName, tagOrId);
 
-  return body.payload;
+  // const { body } = await api<HttpResponse<SquidResponse>>({
+  //   method: 'get',
+  //   path: `/orgs/${orgCode}/squids/${squidName}`,
+  //   query: {
+  //     versionName,
+  //   },
+  // });
+  //
+  // return body.payload;
 }
 
 export async function squidNameIsAvailable(squidName: string): Promise<boolean> {

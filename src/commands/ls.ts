@@ -1,6 +1,7 @@
-import { ux as CliUx, Flags } from '@oclif/core';
+import { Flags } from '@oclif/core';
 
-import { getSquid, squidList } from '../api';
+import { squidList } from '../api';
+import { buildTable } from '../api/demoStore';
 import { CliCommand } from '../command';
 
 export default class Ls extends CliCommand {
@@ -31,38 +32,13 @@ export default class Ls extends CliCommand {
       flags: { org, truncate, name },
     } = await this.parse(Ls);
     const noTruncate = !truncate;
-
     const orgCode = await this.promptOrganization(org, 'using "-o" flag');
 
+    let squids = await squidList({ orgCode });
     if (name) {
-      const squid = await getSquid({ orgCode, squidName: name });
-
-      if (squid.versions) {
-        CliUx.ux.table(
-          squid.versions,
-          {
-            name: { header: 'Version' },
-            artifactUrl: { header: 'Source' },
-            deploymentUrl: { header: 'Endpoint' },
-            status: { header: 'Status' },
-            secretsStatus: { header: 'Secrets' },
-            createdAt: { header: 'Created at' },
-          },
-          { 'no-truncate': noTruncate },
-        );
-      }
-    } else {
-      const squids = await squidList({ orgCode });
-      if (squids) {
-        CliUx.ux.table(
-          squids,
-          {
-            name: {},
-            description: {},
-          },
-          { 'no-truncate': noTruncate },
-        );
-      }
+      squids = squids.filter((s) => s.name === name);
     }
+
+    this.log(buildTable(squids));
   }
 }
